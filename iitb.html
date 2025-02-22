@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="C:\Users\sweet\OneDrive\Documents\Masai_Course\Elevate Program\iitb\styles.css">
+    <title>Document</title>
+    <style>
+        .show{
+            display: grid;
+            grid-template-columns: auto auto;
+        }
+        @media screen and (min-width: 480px) {
+            .show {
+                display: grid;
+                grid-template-columns: auto
+            }
+        }
+    </style>
+</head>
+<body style="background-color: #d8d8d8;">
+    <h1 style="text-align: center;">Animal Tables</h1>
+    <div style="display: block; justify-self: center;width: 175vh;background-color: #fff;padding: 3vh; border-radius: 8px; margin-bottom: 3vh;">
+        <strong style="font-size: large;">Sort by:</strong>
+        <select style="border: 1px solid black; padding: 1vh;">
+          <option>Name</option>
+          <option>Size</option>
+          <option>Location</option>
+        </select>
+        <h3 style="font-size: large;">Add/Edit Animal</h3>
+        <form style="display: flex; justify-content: space-evenly;">
+          <select style="border: 1px solid black; padding: 1vh;">
+            <option value="Big Cats">Big Cats</option>
+            <option value="Dogs">Dogs</option>
+            <option value="Big Fish">Big Fish</option>
+          </select>
+          <input type="text" placeholder="Species" style="border: 1px solid black; padding: 1vh;">
+          <input type="text" placeholder="Name" style="border: 1px solid black; padding: 1vh;">
+          <input type="text" placeholder="Size" style="border: 1px solid black; padding: 1vh;">
+          <input type="text" placeholder="Location" style="border: 1px solid black; padding: 1vh;">
+          <input type="text" placeholder="Image URL" style="border: 1px solid black; padding: 1vh;">
+          <button type="submit" style="background-color: #ff0c0c; padding: 1vh;width: 150px; border-radius: 8px; border: none; color: white;cursor: pointer;">Submit</button>
+        </form>
+    </div>
+    <div style="border: 1px solid #ccc;width: 175vh;padding: 3vh; background-color: #fff;border-radius: 8px;margin: auto;margin-bottom: 5vh;">
+        <h2 style="color: #353535;">Category: Big Cats</h2>
+        <div style="display: grid; grid-template-columns: auto auto;width: 175vh;justify-self: center;padding: 3vh;justify-items: center;gap: 3vh; background-color: hsl(0, 0%, 100%);border-radius: 8px;" id="app1"></div>
+    </div>
+    <div style="border: 1px solid #ccc;width: 175vh;padding: 3vh; background-color: #fff;border-radius: 8px;margin: auto;margin-bottom: 5vh;">
+        <h2 style="color: #353535;">Category: Dog</h2>
+        <div style="display: grid; grid-template-columns: auto auto;width: 175vh;justify-self: center;gap: 5vh;padding: 3vh; background-color: #fff;border-radius: 8px;" id="app2"></div>
+    </div>
+    <div style="border: 1px solid #ccc;width: 175vh;padding: 3vh; background-color: #fff;border-radius: 8px;margin: auto;">
+        <h2 style="color: #353535;">Category: Big Fish</h2>
+        <div style="display: grid; grid-template-columns: auto auto;width: 175vh;justify-self: center;gap: 5vh;padding: 3vh; background-color: #fff;border-radius: 8px;" id="app3"></div>
+    </div>
+    </div>
+    <script>
+        class AnimalList {
+            constructor(data, category) {
+                this.data = data;
+                this.category = category;
+            }
+            render() {
+                return this.data.map((item, index) => `
+                    <div id="${this.category}-item-${index}" style="display: flex; align-items: center; width: 600px; height: 180px; justify-content: space-between; border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
+                        <img src="${item.img}" style="width: 180px; border-radius: 8px;height:175px">
+                        <div> 
+                            <p><strong>Species:</strong> ${item.species}</p>
+                            <p><strong>Name:</strong> ${item.name}</p>
+                            <p><strong>Size:</strong> ${item.size}</p>
+                            <p><strong>Location:</strong> ${item.location}</p>
+                        </div>
+                        <div>
+                            <button style="background-color: #2f302f; color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor:pointer">Edit</button>
+                            <button onclick="hideItem('${this.category}', ${index})" style="background-color: #ffa31a; color: black; border: none; padding: 5px 15px; border-radius: 4px; cursor:pointer">Delete</button>
+                        </div>
+                    </div>
+                `).join("");
+            }
+        }
+        function hideItem(category, index) {
+            document.getElementById(`${category}-item-${index}`).style.display = "none";
+        }
+        const cats = [
+            { img: "c1.png", species: "Big Cats", name: "Tiger", size: "10 ft", location: "Asia" },
+            { img: "c2.jpg", species: "Big Cats", name: "Lion", size: "8 ft", location: "Africa" },
+            { img: "c3.png", species: "Big Cats", name: "Leopard", size: "5 ft", location: "Africa and Asia" },
+            { img: "c4.png", species: "Big Cats", name: "Cheetah", size: "5 ft", location: "Africa" }
+        ];
+        const dogs = [
+            { img: "d1.png", species: "Dogs", name: "Rottweiler", size: "2 ft", location: "Germany" },
+            { img: "d2.png", species: "Dogs", name: "German Shepherd", size: "2 ft", location: "Germany" },
+            { img: "d3.png", species: "Dogs", name: "Alabai", size: "4 ft", location: "Turkey" },
+            { img: "d4.png", species: "Dogs", name: "Labrador", size: "2 ft", location: "UK" }
+        ];
+        const fishs = [
+            { img: "f1.png", species: "Big Fish", name: "Killer Whale", size: "12 ft", location: "Atlantic Ocean" },
+            { img: "f2.png", species: "Big Fish", name: "Humpback Whale", size: "15 ft", location: "Atlantic Ocean" },
+            { img: "f3.png", species: "Big Fish", name: "Tiger Shark", size: "8 ft", location: "Ocean" },
+            { img: "f4.png", species: "Big Fish", name: "Hammerhead Shark", size: "8 ft", location: "Ocean" }
+        ];
+        document.getElementById("app1").innerHTML = new AnimalList(cats, "cats").render();
+        document.getElementById("app2").innerHTML = new AnimalList(dogs, "dogs").render();
+        document.getElementById("app3").innerHTML = new AnimalList(fishs, "fishs").render();
+    </script>
+</body>
+</html>
